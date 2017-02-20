@@ -1,0 +1,16 @@
+.idea
+*.iml
+.DS_Store
+target
+logs
+log
+.project.dir
+*.log
+~$*
+out
+.project
+.settings
+.classpath
+.com
+.metadata
+.recommenders
