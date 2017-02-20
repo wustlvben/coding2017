@@ -1,0 +1,31 @@
+package StringDemo;
+
+public class SringTest {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String str1 = "helloworld";
+		String str2 = "HelloWorld";
+		String str3 = "helloworld";
+		//判断两个字符串是否相等
+		System.out.println("equals1:"+str1.equals(str2));
+		System.out.println("equals2:"+str1.equals(str3));
+		System.out.println("----------------------------");
+		System.out.println("equalsIgnoreCase:"+str1.equalsIgnoreCase(str2));
+		System.out.println("equalsIgnoreCase:"+str1.equalsIgnoreCase(str3));
+		System.out.println("----------------------------");
+		System.out.println("equalsIgnoreCase:"+str1.contains("hw"));
+		System.out.println("equalsIgnoreCase:"+str1.contains("hello"));
+		System.out.println("----------------------------");
+		System.out.println("startsWith:"+str1.startsWith("hello"));
+		System.out.println("----------------------------");
+		System.out.println("isEmpty:"+str1.isEmpty());
+		String str4 = "";
+		System.out.println("----------------------------");
+		System.out.println("isEmpty:"+str4.isEmpty());
+	}
+
+}
