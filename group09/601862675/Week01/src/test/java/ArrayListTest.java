@@ -11,13 +11,16 @@ public class ArrayListTest {
     @Test
     public void testAddWithIndex() {
         log.clearLog();
-        ArrayList list = new ArrayList();
-        for (int i = 0; i < 10; ++i) {
-            list.add(i);
-        }
+        ArrayList list = initListWithSize(10);
         list.add(3, 10);
         System.out.print(list.toString());
         Assert.assertEquals("List: [ 0 1 2 10 3 4 5 6 7 8 9 ]", log.getLog());
+        System.out.println();
+
+        log.clearLog();
+        list.add(list.size(), 11);
+        System.out.print(list.toString());
+        Assert.assertEquals("List: [ 0 1 2 10 3 4 5 6 7 8 9 11 ]", log.getLog());
         System.out.println();
     }
 
@@ -33,12 +36,30 @@ public class ArrayListTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testAddWithIndexOutOfBoundsException() {
-        ArrayList list = new ArrayList();
-        for (int i = 0; i < 48; ++i) {
-            list.add(i);
-        }
+        ArrayList list = initListWithSize(ArrayList.MAX_LIST_SIZE);
         Assert.assertEquals(48, list.size());
         list.add(1);
+    }
+
+    @Test
+    public void testRemove() {
+        ArrayList list = initListWithSize(10);
+
+        log.clearLog();
+        Object removed = list.remove(0);
+        System.out.print(list);
+        Assert.assertEquals(0, removed);
+        Assert.assertEquals(9, list.size());
+        Assert.assertEquals("List: [ 1 2 3 4 5 6 7 8 9 ]", log.getLog());
+        System.out.println();
+
+        log.clearLog();
+        removed = list.remove(list.size()-1);
+        System.out.print(list);
+        Assert.assertEquals(9, removed);
+        Assert.assertEquals(8, list.size());
+        Assert.assertEquals("List: [ 1 2 3 4 5 6 7 8 ]", log.getLog());
+        System.out.println();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -71,5 +92,13 @@ public class ArrayListTest {
         }
         Assert.assertEquals("0123456789", log.getLog());
         System.out.println();
+    }
+
+    private ArrayList initListWithSize(int size) {
+        ArrayList list = new ArrayList();
+        for (int i = 0; i < size; ++i) {
+            list.add(i);
+        }
+        return list;
     }
 }

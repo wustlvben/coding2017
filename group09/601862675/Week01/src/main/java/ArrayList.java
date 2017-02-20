@@ -1,12 +1,10 @@
-import java.util.Arrays;
-
 public class ArrayList implements List{
 
     private Object[] elements;
 
     private static final int INITIAL_SIZE = 16;
 
-    private static final int MAX_SIZE = 48;
+    public static final int MAX_LIST_SIZE = 48;
 
     private int size = 0;
 
@@ -18,17 +16,21 @@ public class ArrayList implements List{
     }
 
     public void add(int index, Object obj) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("");
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
         }
-        testGrow();
-        System.arraycopy(elements, index, elements, index+1, size - index);
-        elements[index] = obj;
-        size++;
+        ensureSpace();
+        if (index == size) {
+            add(obj);
+        } else {
+            System.arraycopy(elements, index, elements, index + 1, size - index);
+            elements[index] = obj;
+            size++;
+        }
     }
 
     public void add(Object obj) {
-        testGrow();
+        ensureSpace();
         elements[size++] = obj;
     }
 
@@ -46,12 +48,12 @@ public class ArrayList implements List{
         return builder.toString();
     }
 
-    private void testGrow() {
+    private void ensureSpace() {
         if (size == capacity) {
-            if (size == MAX_SIZE) {
+            if (size == MAX_LIST_SIZE) {
                 throw new IndexOutOfBoundsException();
             }
-            int newCapacity = capacity*2 > MAX_SIZE ? MAX_SIZE : capacity*2;
+            int newCapacity = capacity*2 > MAX_LIST_SIZE ? MAX_LIST_SIZE : capacity*2;
             grow(newCapacity);
         }
     }
@@ -63,12 +65,22 @@ public class ArrayList implements List{
         capacity = newLength;
     }
 
-    public Object get(int i) {
-        if (i < 0 || i >= size) {
+    public Object get(int index) {
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException();
         }
 
-        return elements[i];
+        return elements[index];
+    }
+
+    public Object remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException();
+        }
+        Object toRemove = elements[index];
+        System.arraycopy(elements, index + 1, elements, index, size - index -1);
+        --size;
+        return toRemove;
     }
 
     public Iterator iterator() {
