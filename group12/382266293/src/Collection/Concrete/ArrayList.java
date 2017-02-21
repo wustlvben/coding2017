@@ -1,16 +1,17 @@
-package Collection;
+package Collection.Concrete;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public class ArrayList<E> implements List<E> {
+import Collection.AbstractList;
+import Collection.Iterator;
+
+public class ArrayList<E> extends AbstractList<E> {
 
 	private E[] elements;
 	private int size;
 	private static final int INITIAL_SIZE = 16;
-	private static final String PREFIX = "[";
-	private static final String SUFFIX = "]";
-	private static final String SEPERATOR = ",";
+
 
 	public ArrayList() {
 		elements = (E[]) new Object[INITIAL_SIZE];
@@ -34,7 +35,6 @@ public class ArrayList<E> implements List<E> {
 		elements = target;
 	}
 	
-	@Override
 	public void add(int index, E e) {
 		checkCapacity();
 		if (index == size) {
@@ -55,18 +55,22 @@ public class ArrayList<E> implements List<E> {
 			return elements[index];
 	}
 	
-	@Override
-	public boolean isEmpty() {
-		if (size == 0)
-			return true;
-		return false;
+	public E getLast() {
+		return get(size-1);
 	}
 	
-	@Override
+	public void addLast(E e) {
+		add(e);	
+	}
+	
+	public E removeLast() {
+		return elements[--size];
+	}
+	
 	public E remove(int index) {
 		checkIndex(index);
-		if (index == size) {
-			return elements[size--];
+		if (index == size-1) {
+			return removeLast();
 		}
 		
 		E result = elements[index];
@@ -82,23 +86,6 @@ public class ArrayList<E> implements List<E> {
 		return size;
 	}
 	
-	private void checkIndex(int i) {
-		if(i<0 || i>size-1)
-			throw new IndexOutOfBoundsException();
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(PREFIX);
-		for (int i = 0; i < size; i++) {
-			sb.append(elements[i]);
-			if (i < size-1)
-				sb.append(SEPERATOR);
-		}
-		sb.append(SUFFIX);
-		return sb.toString();
-	}
 
 	@Override
 	public int hashCode() {
@@ -124,7 +111,6 @@ public class ArrayList<E> implements List<E> {
 			return false;
 		return true;
 	}
-	
 
 	public Iterator<E> iterator(){
 		return new ArrayListIterator<E>(this);
@@ -142,9 +128,7 @@ public class ArrayList<E> implements List<E> {
 
 		@Override
 		public boolean hasNext() {
-			if (pos < size)
-				return true;
-			return false;
+			return pos < size;
 		}
 
 		@Override
@@ -154,5 +138,8 @@ public class ArrayList<E> implements List<E> {
 			throw new NoSuchElementException();
 		}
 	}
-	
+
+
+
+
 }
