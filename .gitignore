@@ -1,3 +1,6 @@
+
+*.xml
+*.iml
 .idea
 *.iml
 rebel.xml
@@ -6,6 +9,7 @@ rebel-remote.xml
 .classpath
 .project
 .setting
+.metadata
 
 target
 *.class
@@ -14,3 +18,5 @@ log
 *.log
 tmp
 *.tmp
+
+
